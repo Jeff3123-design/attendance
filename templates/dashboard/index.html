@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+  <div>
+    <h1 class="h3 fw-bold text-dark mb-1">Attendance Command Center</h1>
+    <p class="text-muted small mb-0">Biometric terminal synchronization & student presence monitoring &bull; {% now "l, jS F Y" %}</p>
+  </div>
+  <div class="mt-2 mt-md-0 d-flex gap-2">
+    <a href="{% url 'attendance:today' %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-calendar-event me-1"></i> Today's Register
+    </a>
+    <a href="{% url 'attendance:logs' %}" class="btn btn-primary btn-sm shadow-sm">
+      <i class="bi bi-arrow-repeat me-1"></i> Live Terminal Feeds
+    </a>
+  </div>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-12 col-sm-6 col-xl">
+    {% include "partials/_stat_card.html" with title="Total Students" value=stats.total_students icon="bi-people-fill" color="primary" subtitle="Enrolled in school" %}
+  </div>
+  <div class="col-12 col-sm-6 col-xl">
+    {% include "partials/_stat_card.html" with title="Present Today" value=stats.present_today icon="bi-check-circle-fill" color="success" subtitle="94% attendance rate" %}
+  </div>
+  <div class="col-12 col-sm-6 col-xl">
+    {% include "partials/_stat_card.html" with title="Absent Today" value=stats.absent_today icon="bi-x-circle-fill" color="danger" subtitle="Parents notified via SMS" %}
+  </div>
+  <div class="col-12 col-sm-6 col-xl">
+    {% include "partials/_stat_card.html" with title="Late Today" value=stats.late_today icon="bi-clock-history" color="warning" subtitle="Scanned after cutoff" %}
+  </div>
+  <div class="col-12 col-sm-6 col-xl">
+    {% include "partials/_stat_card.html" with title="Devices Online" value=stats.devices_online icon="bi-hdd-network-fill" color="info" subtitle="ZKTeco PUSH active" %}
+  </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row g-3 mb-4">
+  <!-- Attendance Trend Chart Area -->
+  <div class="col-12 col-lg-7">
+    <div class="card shadow-sm border-0 h-100 rounded-3">
+      <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+        <h6 class="fw-bold text-dark mb-0">
+          <i class="bi bi-graph-up text-primary me-2"></i>Attendance Trend (Last 14 Days)
+        </h6>
+        <span class="badge bg-light text-muted border">Daily Average: 93.8%</span>
+      </div>
+      <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center bg-light-subtle rounded-bottom" style="min-height: 280px;">
+        <div class="text-center py-4">
+          <div class="display-6 text-muted mb-2"><i class="bi bi-bar-chart"></i></div>
+          <h6 class="fw-bold text-secondary">Attendance Trend Graph Area</h6>
+          <p class="text-muted small mb-3">Chart.js / Highcharts biometric trends rendering canvas.</p>
+          <div class="d-flex justify-content-center gap-1 align-items-end" style="height: 100px;">
+            <div class="bg-primary rounded-top" style="width: 22px; height: 85%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 92%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 94%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 90%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 96%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 91%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 95%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 93%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 97%;"></div>
+            <div class="bg-primary rounded-top" style="width: 22px; height: 94%;"></div>
+          </div>
+          <small class="text-muted mt-2 d-block">Mon &bull; Tue &bull; Wed &bull; Thu &bull; Fri &bull; Mon &bull; Tue &bull; Wed &bull; Thu &bull; Today</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attendance by Class Chart Area -->
+  <div class="col-12 col-lg-5">
+    <div class="card shadow-sm border-0 h-100 rounded-3">
+      <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+        <h6 class="fw-bold text-dark mb-0">
+          <i class="bi bi-pie-chart text-success me-2"></i>Attendance by Class
+        </h6>
+        <span class="badge bg-success-subtle text-success">Target: 95%</span>
+      </div>
+      <div class="card-body p-4 bg-light-subtle rounded-bottom d-flex flex-column justify-content-around" style="min-height: 280px;">
+        <div class="mb-3">
+          <div class="d-flex justify-content-between small fw-semibold mb-1">
+            <span>Form 4 (Candidates)</span>
+            <span class="text-success">98.2%</span>
+          </div>
+          <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 98.2%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between small fw-semibold mb-1">
+            <span>Form 3</span>
+            <span class="text-primary">94.6%</span>
+          </div>
+          <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-primary" role="progressbar" style="width: 94.6%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between small fw-semibold mb-1">
+            <span>Form 2</span>
+            <span class="text-info">92.0%</span>
+          </div>
+          <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 92.0%"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="d-flex justify-content-between small fw-semibold mb-1">
+            <span>Form 1 (New Entrants)</span>
+            <span class="text-warning">90.5%</span>
+          </div>
+          <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 90.5%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Punches Table Placeholder -->
+<div class="card shadow-sm border-0 rounded-3">
+  <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+    <h6 class="fw-bold text-dark mb-0">
+      <i class="bi bi-clock me-2 text-warning"></i>Recent Biometric Punches
+    </h6>
+    <a href="{% url 'attendance:logs' %}" class="btn btn-sm btn-outline-secondary">
+      View All Punches <i class="bi bi-chevron-right ms-1"></i>
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">User ID / Adm No</th>
+            <th>Terminal / Location</th>
+            <th>Punch Timestamp</th>
+            <th>Punch Type</th>
+            <th>Tenant School</th>
+            <th class="pe-4 text-end">Verification</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if recent_logs %}
+            {% for log in recent_logs %}
+            <tr>
+              <td class="ps-4 fw-semibold">{{ log.user_id }}</td>
+              <td>{{ log.device.name }}</td>
+              <td class="text-muted">{{ log.timestamp|date:"Y-m-d H:i:s" }}</td>
+              <td><span class="badge bg-primary-subtle text-primary">{{ log.punch_type }}</span></td>
+              <td>{{ log.school.name }}</td>
+              <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Verified</span></td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td class="ps-4 fw-semibold text-primary">10421 (Kevin Mwangi)</td>
+              <td>Main Gate Terminal (IN01-A)</td>
+              <td class="text-muted">{% now "Y-m-d 06:48:12" %}</td>
+              <td><span class="badge bg-primary-subtle text-primary">CHECK_IN</span></td>
+              <td>Alliance High School</td>
+              <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Verified Fingerprint</span></td>
+            </tr>
+            <tr>
+              <td class="ps-4 fw-semibold text-primary">10422 (Brian Kiprop)</td>
+              <td>Main Gate Terminal (IN01-A)</td>
+              <td class="text-muted">{% now "Y-m-d 06:51:30" %}</td>
+              <td><span class="badge bg-primary-subtle text-primary">CHECK_IN</span></td>
+              <td>Alliance High School</td>
+              <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Verified Fingerprint</span></td>
+            </tr>
+            <tr>
+              <td class="ps-4 fw-semibold text-primary">10550 (Emmanuel Mutua)</td>
+              <td>Main Gate Terminal (IN01-A)</td>
+              <td class="text-muted">{% now "Y-m-d 07:12:05" %}</td>
+              <td><span class="badge bg-warning-subtle text-warning">CHECK_IN (LATE)</span></td>
+              <td>Alliance High School</td>
+              <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Verified Fingerprint</span></td>
+            </tr>
+            <tr>
+              <td class="ps-4 fw-semibold text-primary">TSC-489201 (Peter Kamau)</td>
+              <td>Staff Room Terminal</td>
+              <td class="text-muted">{% now "Y-m-d 07:20:18" %}</td>
+              <td><span class="badge bg-info-subtle text-info">STAFF_IN</span></td>
+              <td>Alliance High School</td>
+              <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Verified Fingerprint</span></td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

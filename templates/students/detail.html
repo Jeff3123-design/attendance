@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title=page_title description="Detailed student biometric profile and historical attendance logs." action_url="/students/" action_label="Back to List" action_icon="bi-arrow-left" %}
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card shadow-sm border-0 rounded-3 text-center p-4">
+      <div class="d-inline-flex p-3 rounded-circle bg-primary-subtle text-primary mx-auto mb-3">
+        <i class="bi bi-person-bounding-box fs-1"></i>
+      </div>
+      <h5 class="fw-bold mb-1">{{ student.full_name|default:"Student Profile" }}</h5>
+      <p class="text-muted small mb-3">Adm: <strong>{{ student.admission_number|default:student_id }}</strong> &bull; {{ student.class_name|default:"Form 4" }} {{ student.stream|default:"East" }}</p>
+
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <span class="badge bg-success-subtle text-success">Biometrics Registered</span>
+        <span class="badge bg-primary-subtle text-primary">Active</span>
+      </div>
+
+      <a href="{% url 'reports:student' student_id %}" class="btn btn-outline-primary btn-sm w-100">
+        <i class="bi bi-journal-medical me-1"></i> View Attendance Dossier
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 rounded-3 mb-4">
+      <div class="card-header bg-white py-3 border-bottom">
+        <h6 class="fw-bold mb-0 text-dark">Profile & Consent Information</h6>
+      </div>
+      <div class="card-body p-4">
+        {% include "partials/_empty_state.html" with title="Student Profile & Attendance History" description="Detailed biometric logs, daily check-in timestamps, parent SMS notifications history, and disciplinary attendance records." action_url="/students/" action_label="Back to Directory" icon="bi-person-badge" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

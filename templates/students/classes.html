@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title="Classes & Streams" description="Academic levels (Form 1 to 4) and stream configurations." action_url="/students/" action_label="Back to Directory" action_icon="bi-arrow-left" %}
+
+<div class="card shadow-sm border-0 rounded-3">
+  <div class="card-header bg-white py-3 border-bottom">
+    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i>Class Stream Allocations</h6>
+  </div>
+  <div class="card-body p-4">
+    {% include "partials/_empty_state.html" with title="Classes & Streams Management" description="Configure class divisions (Form 1-4) and streams (North, South, East, West, Blue, Red). Real-time attendance percentages will aggregate by stream." action_url="/students/" action_label="View All Students" icon="bi-mortarboard" %}
+  </div>
+</div>
+{% endblock %}

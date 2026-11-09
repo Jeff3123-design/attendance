@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title="Bulk Student Import" description="Upload school nominal roll via Excel (.xlsx) or CSV." action_url="/students/" action_label="Back to Students" action_icon="bi-arrow-left" %}
+
+<div class="card shadow-sm border-0 rounded-3">
+  <div class="card-header bg-white py-3 border-bottom">
+    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-file-earmark-spreadsheet text-success me-2"></i>Upload Spreadsheet</h6>
+  </div>
+  <div class="card-body p-4">
+    {% include "partials/_empty_state.html" with title="Excel / CSV Bulk Ingestion Engine" description="Download the NEMIS-compatible Excel template, fill student details (Adm, Name, Form, Stream, Dorm, Guardian Phone), and upload for bulk ingestion." action_url="/students/" action_label="Return to Students" icon="bi-cloud-arrow-up" %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<div class="card stat-card shadow-sm h-100">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <p class="text-muted text-uppercase fw-semibold mb-1 small">{{ title }}</p>
+        <h3 class="fw-bold mb-0 text-dark">{{ value }}</h3>
+        {% if subtitle %}
+          <small class="text-muted d-block mt-1">{{ subtitle }}</small>
+        {% endif %}
+      </div>
+      <div class="stat-icon-wrapper bg-{{ color|default:'primary' }}-subtle text-{{ color|default:'primary' }}">
+        <i class="bi {{ icon|default:'bi-graph-up' }}"></i>
+      </div>
+    </div>
+  </div>
+</div>

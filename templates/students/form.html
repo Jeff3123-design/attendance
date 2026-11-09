@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title=page_title description="Student demographic details, admission records, and biometric consent." %}
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 rounded-3 mb-4">
+      <div class="card-header bg-white py-3 border-bottom">
+        <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-person-lines-fill text-primary me-2"></i>{{ action }} Student Record</h6>
+      </div>
+      <div class="card-body p-4">
+        {% include "partials/_empty_state.html" with title="Student Form Interface" description="Form fields for Admission Number, Full Name, Gender, Class, Stream, Dormitory, Guardian Name & Phone, and Data Protection Act consent checkbox." action_url="/students/" action_label="Back to Students Directory" icon="bi-person-plus-fill" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm border-0 rounded-3 bg-light p-3">
+      <h6 class="fw-bold text-dark"><i class="bi bi-shield-check text-success me-1"></i>Kenyan Data Protection Act</h6>
+      <p class="small text-muted mb-0">Under Section 31 of Kenya's Data Protection Act (2019), biometric data of minors requires explicit written consent from parent or legal guardian prior to fingerprint enrollment.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

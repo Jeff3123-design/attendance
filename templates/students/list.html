@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title="Students Directory" description="Registered students and biometric enrollment status." action_url="/students/add/" action_label="Enroll Student" action_icon="bi-person-plus" %}
+
+<div class="card shadow-sm border-0 rounded-3 mb-4">
+  <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <div class="d-flex gap-2">
+      <input type="text" class="form-control form-control-sm" placeholder="Search admission no, name..." style="width: 240px;">
+      <select class="form-select form-select-sm" style="width: 140px;">
+        <option>All Classes</option>
+        <option>Form 1</option>
+        <option>Form 2</option>
+        <option>Form 3</option>
+        <option>Form 4</option>
+      </select>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="{% url 'students:import' %}" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-upload me-1"></i> Bulk Import
+      </a>
+    </div>
+  </div>
+
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">Adm No</th>
+            <th>Full Name</th>
+            <th>Class / Stream</th>
+            <th>Gender</th>
+            <th>Dormitory</th>
+            <th>Guardian Contact</th>
+            <th>Biometric Consent</th>
+            <th class="text-end pe-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if students %}
+            {% for student in students %}
+            <tr>
+              <td class="ps-4 fw-bold text-primary">{{ student.admission_number }}</td>
+              <td class="fw-semibold">{{ student.full_name }}</td>
+              <td><span class="badge bg-light text-dark border">{{ student.class_name }} {{ student.stream }}</span></td>
+              <td>{{ student.get_gender_display }}</td>
+              <td>{{ student.dorm|default:"-" }}</td>
+              <td><span class="font-monospace small">{{ student.guardian_phone|default:"-" }}</span></td>
+              <td>
+                {% if student.consent_given %}
+                  <span class="badge bg-success-subtle text-success"><i class="bi bi-check-circle me-1"></i>Consent Granted</span>
+                {% else %}
+                  <span class="badge bg-warning-subtle text-warning"><i class="bi bi-clock me-1"></i>Pending</span>
+                {% endif %}
+              </td>
+              <td class="text-end pe-4">
+                <a href="{% url 'students:detail' student.pk %}" class="btn btn-sm btn-outline-primary py-0 px-2" title="View"><i class="bi bi-eye"></i></a>
+                <a href="{% url 'students:edit' student.pk %}" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Edit"><i class="bi bi-pencil"></i></a>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="8" class="p-0">
+                {% include "partials/_empty_state.html" with title="No Students Found" description="Enroll students manually or upload school nominal roster via Excel/CSV." action_url="/students/add/" action_label="Enroll First Student" icon="bi-people" %}
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer bg-white py-2">
+    {% include "partials/_pagination.html" %}
+  </div>
+</div>
+{% endblock %}

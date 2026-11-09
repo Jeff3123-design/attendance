@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/_page_header.html" with title=page_title description="Staff registration and biometric clock-in profile setup." action_url="/staff/" action_label="Back to Staff List" action_icon="bi-arrow-left" %}
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 rounded-3 mb-4">
+      <div class="card-header bg-white py-3 border-bottom">
+        <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-person-plus text-primary me-2"></i>{{ action }} Staff Record</h6>
+      </div>
+      <div class="card-body p-4">
+        {% include "partials/_empty_state.html" with title="Staff Form Interface" description="Form for Staff / TSC Number, Full Legal Name, Department, Phone Number, and Biometric Device PIN mapping." action_url="/staff/" action_label="Return to Directory" icon="bi-person-gear" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
